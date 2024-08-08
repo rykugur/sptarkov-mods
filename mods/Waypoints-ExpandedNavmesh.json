@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "WAYPOINTS - EXPANDED NAVMESH",
+  "url": "https://hub.sp-tarkov.com/files/file/1119-waypoints-expanded-navmesh/",
+  "fetcher": "github",
+  "owner": "DrakiaXYZ",
+  "repo": "SPT-Waypoints",
+  "version": "1.5.1",
+  "filename": "DrakiaXYZ-Waypoints-1.5.1.zip"
+}

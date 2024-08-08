@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "BIGBRAIN",
+  "url": "https://hub.sp-tarkov.com/files/file/1219-bigbrain/",
+  "fetcher": "github",
+  "owner": "DrakiaXYZ",
+  "repo": "SPT-BigBrain",
+  "version": "1.0.1",
+  "filename": "DrakiaXYZ-BigBrain-1.0.1.zip"
+}

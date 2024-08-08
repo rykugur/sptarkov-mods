@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "QUESTING BOTS",
+  "url": "https://hub.sp-tarkov.com/files/file/1534-questing-bots/",
+  "fetcher": "github",
+  "owner": "dwesterwick",
+  "repo": "SPTQuestingBots",
+  "version": "0.7.0",
+  "filename": "DanW-SPTQuestingBots.zip"
+}

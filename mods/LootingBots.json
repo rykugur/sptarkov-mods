@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "Looting Bots",
+  "url": "https://hub.sp-tarkov.com/files/file/1096-looting-bots/",
+  "fetcher": "github",
+  "owner": "Skwizzy",
+  "repo": "SPT-LootingBots",
+  "version": "1.3.5",
+  "filename": "Skwizzy-LootingBots-v1.3.5.zip"
+}

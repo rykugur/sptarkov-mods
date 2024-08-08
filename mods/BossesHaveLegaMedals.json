@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "BOSSES HAVE LEGA MEDALS",
+  "url": "https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/",
+  "fetcher": "github",
+  "owner": "acidphantasm",
+  "repo": "acidphantasm-refloot",
+  "version": "1.0.0",
+  "filename": "acidphantasm-bosseshavelegamedals.7z"
+}

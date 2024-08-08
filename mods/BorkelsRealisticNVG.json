@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "BORKEL'S REALISTIC NIGHT VISION GOGGLES (NVGS AND T-7)",
+  "url": "https://hub.sp-tarkov.com/files/file/1303-borkel-s-realistic-night-vision-goggles-nvgs-and-t-7/",
+  "owner": "Borkel",
+  "fetcher": "github",
+  "repo": "RealisticNVG-client-2",
+  "version": "1.5.6",
+  "filename": "BRNVG-1.5.6.zip"
+}

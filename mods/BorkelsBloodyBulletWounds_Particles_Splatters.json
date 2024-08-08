@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "Borkel's Bloody Bullet Wounds + Particles + Splatters",
+  "url": "https://hub.sp-tarkov.com/files/file/1740-borkel-s-bloody-bullet-wounds-particles-splatters/",
+  "owner": "Borkel",
+  "fetcher": "github",
+  "repo": "Blood-Particles",
+  "version": "1.2.1",
+  "filename": "BBBWP-1.2.1.zip"
+}

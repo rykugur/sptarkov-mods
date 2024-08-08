@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "MORECHECKMARKS",
+  "url": "https://hub.sp-tarkov.com/files/file/1159-morecheckmarks/",
+  "fetcher": "github",
+  "owner": "TommySoucy",
+  "repo": "MoreCheckmarks",
+  "version": "1.5.14",
+  "filename": "MoreCheckmarks-1.5.14-for-3.9.0-30626.zip"
+}

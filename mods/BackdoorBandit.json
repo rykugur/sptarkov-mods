@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "BACKDOOR BANDIT (BB)",
+  "url": "https://hub.sp-tarkov.com/files/file/1154-backdoor-bandit-bb",
+  "fetcher": "github",
+  "owner": "dvize",
+  "repo": "BackdoorBandit",
+  "version": "1.9.0",
+  "filename": "dvize.BackdoorBandit-v1.9.0.0.zip"
+}

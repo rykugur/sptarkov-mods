@@ -1,0 +1,8 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "BORKEL'S BIG REALISTIC THERMAL PACKAGE - BRING REAL LIFE REALISM TO YOUR THERMAL SCOPES",
+  "url": "https://hub.sp-tarkov.com/files/file/1510-borkel-s-big-realistic-thermal-package-bring-real-life-realism-to-your-thermal-s/",
+  "fetcher": "googleDrive",
+  "version": "1.0.4",
+  "googleDriveFileId": "1WHvn2x3UgIOmNIWXmmEOKIZbdE8_yIvm"
+}

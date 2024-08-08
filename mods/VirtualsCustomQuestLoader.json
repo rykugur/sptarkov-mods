@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "VIRTUAL'S CUSTOM QUEST LOADER",
+  "url": "https://hub.sp-tarkov.com/files/file/885-virtual-s-custom-quest-loader/",
+  "fetcher": "github",
+  "version": "2.0.2",
+  "owner": "VirtualAE",
+  "repo": "Virtuals-Custom-Quest-Loader",
+  "filename": "VCQL-2.0.2.zip"
+}

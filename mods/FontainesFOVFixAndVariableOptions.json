@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "Fontaine's FOV Fix & Variable Optics",
+  "url": "https://hub.sp-tarkov.com/files/file/942-fontaine-s-fov-fix-variable-optics",
+  "fetcher": "github",
+  "owner": "space-commits",
+  "repo": "SPT-FOV-Fix",
+  "version": "2.1.3",
+  "filename": "Fontaine-FOV-Fix-v2.1.3-SPT-v3.9.3.zip"
+}

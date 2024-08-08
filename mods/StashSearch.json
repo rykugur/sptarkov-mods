@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "STASH SEARCH",
+  "url": "https://hub.sp-tarkov.com/files/file/1769-stash-search/",
+  "fetcher": "github",
+  "owner": "CJ-SPT",
+  "repo": "StashSearch",
+  "version": "1.3.3",
+  "filename": "StashSearch.7z"
+}

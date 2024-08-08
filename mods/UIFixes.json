@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "UIFixes",
+  "url": "https://hub.sp-tarkov.com/files/file/1860-ui-fixes/",
+  "fetcher": "github",
+  "version": "2.3.4",
+  "owner": "tyfon7",
+  "repo": "UIFixes",
+  "filename": "Tyfon-UIFixes-2.3.4.zip"
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "AMANDS'S GRAPHICS",
+  "url": "https://hub.sp-tarkov.com/files/file/813-amands-s-graphics/",
+  "fetcher": "github",
+  "owner": "Amands2Mello",
+  "repo": "AmandsGraphics",
+  "version": "1.6.3",
+  "filename": "AmandsGraphics.1.6.3.zip"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "fetcher": {
+      "type": "string",
+      "description": "Name of the fetcher to use.",
+      "enum": [
+        "github",
+        "googleDrive",
+        "direct"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "description": "SPT Filebase URL."
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owner of the github repository."
+    },
+    "repo": {
+      "type": "string",
+      "description": "Name of the github repository."
+    },
+    "version": {
+      "type": "string",
+      "description": "Mod release version."
+    },
+    "filename": {
+      "type": "string",
+      "description": "Mod filename for downloads."
+    }
+  },
+  "required": [
+    "name",
+    "url",
+    "type",
+    "fetcher"
+  ]
+}

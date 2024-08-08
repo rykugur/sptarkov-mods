@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "SPT REALISM MOD",
+  "url": "https://hub.sp-tarkov.com/files/file/606-spt-realism-mod/",
+  "fetcher": "github",
+  "owner": "space-commits",
+  "repo": "SPT-Realism-Mod-Client",
+  "version": "1.4.1",
+  "filename": "Realism-Mod-v1.4.1-SPT-v3.9.4.zip"
+}
