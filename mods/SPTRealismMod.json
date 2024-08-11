@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "SPT REALISM MOD",
+  "name": "SPT Realism Mod",
   "url": "https://hub.sp-tarkov.com/files/file/606-spt-realism-mod/",
   "fetcher": "github",
   "owner": "space-commits",

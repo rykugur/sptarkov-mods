@@ -3,7 +3,8 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of the mod (from Filebase)."
     },
     "fetcher": {
       "type": "string",
@@ -33,6 +34,16 @@
     "filename": {
       "type": "string",
       "description": "Mod filename for downloads."
+    },
+    "googleDriveId": {
+      "type": "string",
+      "description": "Google Drive file ID."
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": [

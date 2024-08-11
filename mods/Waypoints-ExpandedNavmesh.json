@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "WAYPOINTS - EXPANDED NAVMESH",
+  "name": "Waypoints - Expanded Navmesh",
   "url": "https://hub.sp-tarkov.com/files/file/1119-waypoints-expanded-navmesh/",
   "fetcher": "github",
   "owner": "DrakiaXYZ",

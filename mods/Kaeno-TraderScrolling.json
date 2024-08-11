@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "KAENO-TRADERSCROLLING",
+  "name": "Kaeno-TraderScrolling",
   "url": "https://hub.sp-tarkov.com/files/file/1508-kaeno-traderscrolling/",
   "fetcher": "github",
   "owner": "CWXDEV",

@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "QUESTING BOTS",
+  "name": "Questing Bots",
   "url": "https://hub.sp-tarkov.com/files/file/1534-questing-bots/",
   "fetcher": "github",
   "owner": "dwesterwick",

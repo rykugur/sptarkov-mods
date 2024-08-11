@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "MORECHECKMARKS",
+  "name": "MoreCheckmarks",
   "url": "https://hub.sp-tarkov.com/files/file/1159-morecheckmarks/",
   "fetcher": "github",
   "owner": "TommySoucy",

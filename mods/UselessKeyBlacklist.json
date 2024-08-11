@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "USELESS KEY BLACKLIST",
+  "name": "Useless key blacklist",
   "url": "https://hub.sp-tarkov.com/files/file/760-useless-key-blacklist/",
   "fetcher": "googleDrive",
   "version": "1.2.2",

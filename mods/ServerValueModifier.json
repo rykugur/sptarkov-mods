@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "SERVER VALUE MODIFIER [SVM]",
+  "name": "Server Value Modifier [SVM]",
   "url": "https://hub.sp-tarkov.com/files/file/379-server-value-modifier-svm/",
   "fetcher": "googleDrive",
   "version": "1.9.1",

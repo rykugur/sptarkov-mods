@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "REF - SPT FRIENDLY QUESTS",
+  "name": "Ref - SPT Friendly Quests",
   "url": "https://hub.sp-tarkov.com/files/file/2108-ref-spt-friendly-quests/",
   "fetcher": "github",
   "owner": "acidphantasm",

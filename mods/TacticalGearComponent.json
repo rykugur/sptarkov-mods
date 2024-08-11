@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "TACTICAL GEAR COMPONENT",
+  "name": "Tactical Gear Component",
   "url": "https://hub.sp-tarkov.com/files/file/1555-tactical-gear-component/",
   "fetcher": "github",
   "owner": "emilanderss0n",

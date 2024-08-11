@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "STASH SEARCH",
+  "name": "Stash Search",
   "url": "https://hub.sp-tarkov.com/files/file/1769-stash-search/",
   "fetcher": "github",
   "owner": "CJ-SPT",

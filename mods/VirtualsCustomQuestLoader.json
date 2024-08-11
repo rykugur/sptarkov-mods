@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "VIRTUAL'S CUSTOM QUEST LOADER",
+  "name": "Virtual's Custom Quest Loader",
   "url": "https://hub.sp-tarkov.com/files/file/885-virtual-s-custom-quest-loader/",
   "fetcher": "github",
   "version": "2.0.2",

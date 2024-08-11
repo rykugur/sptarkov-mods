@@ -1,0 +1,13 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "Unicorn",
+  "url": "https://hub.sp-tarkov.com/files/file/2166-unicorn/",
+  "fetcher": "googleDrive",
+  "version": "1.1",
+  "googleDriveId": "1kuQWzygxJtZkcPJZON55q7qeRpVwFDFf",
+  "dependencies": [
+    "SWAGPlusDonuts",
+    "Waypoints-ExpandedNavmesh",
+    "UnityToolkit"
+  ]
+}

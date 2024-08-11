@@ -1,10 +1,14 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "SAIN - SOLARINT'S AI MODIFICATIONS - FULL AI COMBAT SYSTEM REPLACEMENT",
+  "name": "SAIN - Solarint's AI Modifications - Full AI Combat System Replacement",
   "url": "https://hub.sp-tarkov.com/files/file/1062-sain-solarint-s-ai-modifications-full-ai-combat-system-replacement/",
   "fetcher": "github",
   "owner": "Solarint",
   "repo": "SAIN",
   "version": "3.0.6",
-  "filename": "SAIN-3.1.0-Release.7z"
+  "filename": "SAIN-3.1.0-Release.7z",
+  "dependencies": [
+    "BigBrain",
+    "Waypoints-ExpandedNavmesh"
+  ]
 }

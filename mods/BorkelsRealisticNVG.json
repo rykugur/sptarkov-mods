@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "BORKEL'S REALISTIC NIGHT VISION GOGGLES (NVGS AND T-7)",
+  "name": "Borkel's Realistic Night Vision Goggles (NVGs and T-7)",
   "url": "https://hub.sp-tarkov.com/files/file/1303-borkel-s-realistic-night-vision-goggles-nvgs-and-t-7/",
   "owner": "Borkel",
   "fetcher": "github",

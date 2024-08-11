@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "BACKDOOR BANDIT (BB)",
+  "name": "Backoodr Bandit (BB)",
   "url": "https://hub.sp-tarkov.com/files/file/1154-backdoor-bandit-bb",
   "fetcher": "github",
   "owner": "dvize",

@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "UnityToolkit",
+  "url": "https://hub.sp-tarkov.com/files/file/1976-unitytoolkit/",
+  "fetcher": "github",
+  "owner": "",
+  "repo": "",
+  "version": "",
+  "filename": ""
+}

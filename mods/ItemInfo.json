@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "ITEM INFO",
+  "name": "Item Info",
   "url": "https://hub.sp-tarkov.com/files/file/985-item-info/",
   "fetcher": "github",
   "owner": "odt1",

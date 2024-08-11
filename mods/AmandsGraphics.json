@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "AMANDS'S GRAPHICS",
+  "name": "Amands's Graphics",
   "url": "https://hub.sp-tarkov.com/files/file/813-amands-s-graphics/",
   "fetcher": "github",
   "owner": "Amands2Mello",

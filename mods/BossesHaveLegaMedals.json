@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/mod-schema.json",
-  "name": "BOSSES HAVE LEGA MEDALS",
+  "name": "Bosses Have Lega Medals",
   "url": "https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/",
   "fetcher": "github",
   "owner": "acidphantasm",
