@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/mod-schema.json",
+  "name": "SWAG + Donuts - Dynamic Spawn Waves and Custom Spawn Points",
+  "url": "https://hub.sp-tarkov.com/files/file/1976-unitytoolkit/",
+  "fetcher": "github",
+  "owner": "p-kossa",
+  "repo": "nookys-swag-presets-spt",
+  "version": "3.5.1",
+  "filename": " SWAG-Donuts-v3.5.1-SPT39x.zip",
+  "dependencies": [
+    "Waypoints",
+    "Unity Toolkit"
+  ]
+}
