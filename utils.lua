@@ -1,3 +1,5 @@
+local utils = {}
+
 ---@class SPTarkovMod
 ---@field name string
 ---@field url string
@@ -9,80 +11,121 @@
 ---@field googleDriveId? string
 ---@field dependencies? string[]
 
----Download a file from GitHub
----@param mod SPTarkovMod
----@return boolean
-local function downloadFromGithub(mod)
-	LogIfVerbose("------ Downloading file " .. mod.filename .. " from GitHub to download dir=" .. Args.downloaddir)
-	-- local url = string.format("https://github.com/%s/%s/releases/download/%s/%s", owner, repo, version, filename)
-	-- return Utils.doDownload(url, downloadDir, filename)
+---@class CommandResult
+---@field success? boolean
+---@field exitType? string
+---@field exitCode? integer
+
+---@class DownloadResult
+---@field success? boolean
+---@field filename? string
+---@field path? string
+---@field commandResult CommandResult
+
+---Excutes a command in the shell
+---@param command any
+---@return CommandResult
+local function executeCommand(command)
+	utils.log("Executing command=" .. command, 1)
+	local success, exitType, exitCode = os.execute(command)
+
+	if not success then
+		if exitType == "exit" then
+			utils.log("Command exited with status: " .. exitCode, 1)
+		elseif exitType == "signal" then
+			utils.log("Command was killed by signal: " .. exitCode, 1)
+		end
+	end
+
+	return { success = success, exitType = exitType, exitCode = exitCode }
+end
+
+---@param url any
+---@param downloadDir any
+---@param filename any
+---@return DownloadResult
+local function doDownload(url, downloadDir, filename)
+	local download_command = string.format('wget -O %s/%s "%s"', downloadDir, filename, url)
+	local commandResult = executeCommand(download_command)
+	return { success = commandResult.success, filename = filename, path = downloadDir, commandResult = commandResult }
+end
+
+local function downloadFromGithub(owner, repo, version, filename)
+	local url = string.format("https://github.com/%s/%s/releases/download/%s/%s", owner, repo, version, filename)
+	return doDownload(url, Args.downloaddir, filename)
 end
 
 local function downloadFromGoogleDrive(file_id, filename)
-	LogIfVerbose("------ Downloading file " .. filename .. " from Google Drive to download dir=" .. Args.downloaddir)
-	-- local url = string.format("https://docs.google.com/uc?export=download&id=%s", file_id)
-	-- return Utils.doDownload(url, downloadDir, filename)
+	local url = string.format("https://docs.google.com/uc?export=download&id=%s", file_id)
+	return doDownload(url, Args.downloaddir, filename)
 end
 
 local function downloadDirect(url, destination) end
 
 local function unzip(filename)
-	LogIfVerbose("------ Unzipping file " .. filename .. " to destination=" .. Args.destination)
 	local unzip_command = string.format("unzip -o %s -d %s", filename, Args.destination)
-	-- return Utils.executeCommand(unzip_command)
+	return executeCommand(unzip_command)
 end
 
 local function un7zip(filename, destination)
-	LogIfVerbose("------ Un7zipping file " .. filename .. " to destination=" .. destination)
+	utils.log("------ Un7zipping file " .. filename .. " to destination=" .. destination, 1)
 	local un7zip_command = string.format("7z x -o%s %s", destination, filename)
-	-- return Utils.executeCommand(un7zip_command)
+	return executeCommand(un7zip_command)
 end
 
-local function doDownload(url, downloadDir, filename)
-	local download_command = string.format('wget -O %s/%s "%s"', downloadDir, filename, url)
-	-- return Utils.executeCommand(download_command)
-end
+local function extract(filename, destination)
+	local extension = utils.getFileExtension(filename)
 
-local function executeCommand(command)
-	LogIfVerbose("Executing command=" .. command)
-	local success, exitType, exitCode = os.execute(command)
-
-	if not success then
-		if exitType == "exit" then
-			LogIfVerbose("Command exited with status: " .. exitCode)
-		elseif exitType == "signal" then
-			LogIfVerbose("Command was killed by signal: " .. exitCode)
-		end
+	-- TODO: finish this
+	if extension == ".zip" then
+		return unzip(filename)
+	elseif extension == ".7z" then
+		return un7zip(filename, destination)
+	else
+		utils.log("File extension " .. extension .. " not supported", 1)
 	end
-
-	return success
 end
 
 ------------------------------
 
-local Utils = {}
-
-function Utils.downloadAndExtract(mods)
-	LogIfVerbose("Downloading and extracting mods...")
+function utils.downloadAndExtract(mods)
+	utils.log("Downloading and extracting mods...", 1)
 
 	for _, mod in pairs(mods) do
-		LogIfVerbose("\tHandling mod: " .. mod.name)
+		utils.log("\thandling mod: " .. mod.name, 1)
 
-		local downloaded = true
+		local result = {}
 		if mod["fetcher"] == "github" then
-			downloaded = downloadFromGithub(mod)
+			result = downloadFromGithub(mod.owner, mod.repo, mod.version, mod.filename)
 		elseif mod["fetcher"] == "googleDrive" then
-			-- downloaded = Utils.downloadFromGoogleDrive(mod.googleDriveId, mod.filename, downloadDir)
+			result = downloadFromGoogleDrive(mod.googleDriveId, mod.filename)
 		elseif mod.fetcher == "direct" then
-			print("implement me")
+			utils.log("direct fetcher not implemented yet.")
 		end
 
-		if downloaded then
-			LogIfVerbose("\tDownloaded " .. mod.name .. " successfully, extracting to " .. Args.destination)
+		if result.success then
+			utils.log("\tdownloaded, extracting...", 1)
+			-- TODO: special handling for SVM
+			local path = result.path .. "/" .. result.filename
+			local extractResult = extract(path, Args.destination)
+			if extractResult ~= nil then
+				utils.log("\textracted mod " .. mod.name .. " successfully", 1)
+			else
+				local msg = string.format("\tfailed to extract mod %s, error=%s", mod.name, ToString(extractResult))
+				utils.log(msg, 1)
+			end
+		else
+			local msg = string.format(
+				"\tfailed to download mod %s, exitType=%s, exitCode=%d",
+				mod.name,
+				result.commandResult.exitType,
+				result.commandResult.exitCode
+			)
+			utils.log(msg, 1)
 		end
 	end
 
-	LogIfVerbose("Done downloading and extracting mods...")
+	utils.log("Done downloading and extracting mods...", 1)
 end
 
 -- function Utils.downloadAndExtract2(mods, destination, downloadDir)
@@ -92,7 +135,7 @@ end
 -- 		elseif mod["fetcher"] == "googleDrive" then
 -- 			Utils.downloadFromGoogleDrive(mod.googleDriveId, mod.filename, downloadDir)
 -- 		elseif mod.fetcher == "direct" then
--- 			print("implement me")
+-- 			Log("implement me")
 -- 		end
 -- 	end
 --
@@ -110,24 +153,24 @@ end
 -- 			elseif Utils.getFileExtension(filePath) == ".7z" then
 -- 				Utils.un7zip(filePath, destination)
 -- 			else
--- 				print("File extension " .. Utils.getFileExtension(filePath) .. " not supported")
+-- 				Log("File extension " .. Utils.getFileExtension(filePath) .. " not supported")
 -- 			end
 -- 		end
 -- 	end
 -- end
 
-function Utils.pathExists(path)
+function utils.pathExists(path)
 	return require("ml").exists(path)
 end
 
-function Utils.loadModsFromPath(path)
+function utils.loadModsFromPath(path)
 	local lfs = require("lfs")
 	local mods = {}
 
 	for file in lfs.dir(path) do
-		if file ~= "." and file ~= ".." and Utils.getFileExtension(file) == ".json" then
-			local mod = Utils.readJsonFile(path .. "/" .. file)
-			LogIfVerbose("Loaded mod=" .. ToString(mod))
+		if file ~= "." and file ~= ".." and utils.getFileExtension(file) == ".json" then
+			local mod = utils.readJsonFile(path .. "/" .. file)
+			utils.log("Loaded mod=" .. ToString(mod), 1)
 			if mod ~= nil then
 				table.insert(mods, mod)
 			end
@@ -137,8 +180,8 @@ function Utils.loadModsFromPath(path)
 	return mods
 end
 
-function Utils.readJsonFile(filePath)
-	LogIfVerbose("Attempting to read json file=" .. ToString(filePath))
+function utils.readJsonFile(filePath)
+	utils.log("Attempting to read json file=" .. ToString(filePath), 1)
 	local dkjson = require("dkjson")
 	local file = io.open(filePath, "r")
 	if file == nil then
@@ -150,8 +193,19 @@ function Utils.readJsonFile(filePath)
 	return json
 end
 
-function Utils.getFileExtension(filePath)
+function utils.getFileExtension(filePath)
 	return filePath:match("^.+(%..+)$")
 end
 
-return Utils
+function utils.log(msg, verbosity)
+	if verbosity == nil or verbosity == 0 then
+		print("INFO: " .. msg)
+		return
+	end
+
+	if Args.verbosity >= verbosity then
+		print("VERBOSE: " .. msg)
+	end
+end
+
+return utils
