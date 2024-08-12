@@ -1,0 +1,8 @@
+---@alias SPTarkovMod
+---| '"name"'
+---| '"filename"'
+---| '"fetcher"'
+---| '"owner"'
+---| '"repo"'
+---| '"version"'
+---| '"googleDriveId"'

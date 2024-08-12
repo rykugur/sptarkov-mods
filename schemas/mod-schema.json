@@ -6,6 +6,10 @@
       "type": "string",
       "description": "Name of the mod (from Filebase)."
     },
+    "url": {
+      "type": "string",
+      "description": "SPT Filebase URL."
+    },
     "fetcher": {
       "type": "string",
       "description": "Name of the fetcher to use.",
@@ -14,10 +18,6 @@
         "googleDrive",
         "direct"
       ]
-    },
-    "url": {
-      "type": "string",
-      "description": "SPT Filebase URL."
     },
     "owner": {
       "type": "string",

@@ -5,6 +5,7 @@
   "fetcher": "googleDrive",
   "version": "1.1",
   "googleDriveId": "1kuQWzygxJtZkcPJZON55q7qeRpVwFDFf",
+  "filename": "Unicorn-1.1.zip",
   "dependencies": [
     "SWAGPlusDonuts",
     "Waypoints-ExpandedNavmesh",
