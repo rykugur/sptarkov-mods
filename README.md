@@ -79,15 +79,8 @@ lua main.lua [-j/--json] /path/to/your/custom/mods
 ```
 
 Use the supplied JSON schema in `./schema/mod-schema.json` for autocompletion
-and to ensure your JSON is valid. Example:
-
-```json
-{
-  "$schema": "../schemas/mod-schema.json",
-  "name": "...",
-  ...
-}
-```
+and to ensure your JSON is valid. Use any mod in the `./mods` directory as an
+example to get started.
 
 **NOTE**: You can also just add your JSON files to the `mods` directory in this repo
 and they'll be picked up automatically.

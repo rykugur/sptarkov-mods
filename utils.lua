@@ -1,50 +1,68 @@
-local Utils = {}
-
----@alias SPTarkovMod
----| '"name"' # Name of the mod
----| '"filename"' # Name of the file to download
----| '"fetcher"' # Fetcher to use to download the file
----| '"owner"' # GitHub owner
----| '"repo"' # GitHub repo
----| '"version"' # Mod version
----| '"googleDriveId"' # Google Drive file ID
+---@class SPTarkovMod
+---@field name string
+---@field url string
+---@field fetcher string
+---@field owner? string
+---@field repo? string
+---@field version? string
+---@field filename? string
+---@field googleDriveId? string
+---@field dependencies? string[]
 
 ---Download a file from GitHub
 ---@param mod SPTarkovMod
----@param downloadDir any # Directory to download the file to
 ---@return boolean
-local function downloadFromGithub(mod, downloadDir)
-	LogIfVerbose("------ Downloading file " .. mod.filename .. " from GitHub to download dir=" .. downloadDir)
+local function downloadFromGithub(mod)
+	LogIfVerbose("------ Downloading file " .. mod.filename .. " from GitHub to download dir=" .. Args.downloaddir)
 	-- local url = string.format("https://github.com/%s/%s/releases/download/%s/%s", owner, repo, version, filename)
 	-- return Utils.doDownload(url, downloadDir, filename)
 end
 
-local function downloadFromGoogleDrive(file_id, filename, downloadDir)
-	LogIfVerbose("------ Downloading file " .. filename .. " from Google Drive to download dir=" .. downloadDir)
-	local url = string.format("https://docs.google.com/uc?export=download&id=%s", file_id)
-	return Utils.doDownload(url, downloadDir, filename)
+local function downloadFromGoogleDrive(file_id, filename)
+	LogIfVerbose("------ Downloading file " .. filename .. " from Google Drive to download dir=" .. Args.downloaddir)
+	-- local url = string.format("https://docs.google.com/uc?export=download&id=%s", file_id)
+	-- return Utils.doDownload(url, downloadDir, filename)
 end
 
 local function downloadDirect(url, destination) end
 
-local function unzip(filename, destination)
-	LogIfVerbose("------ Unzipping file " .. filename .. " to destination=" .. destination)
-	local unzip_command = string.format("unzip -o %s -d %s", filename, destination)
-	return Utils.executeCommand(unzip_command)
+local function unzip(filename)
+	LogIfVerbose("------ Unzipping file " .. filename .. " to destination=" .. Args.destination)
+	local unzip_command = string.format("unzip -o %s -d %s", filename, Args.destination)
+	-- return Utils.executeCommand(unzip_command)
 end
 
 local function un7zip(filename, destination)
 	LogIfVerbose("------ Un7zipping file " .. filename .. " to destination=" .. destination)
 	local un7zip_command = string.format("7z x -o%s %s", destination, filename)
-	return Utils.executeCommand(un7zip_command)
+	-- return Utils.executeCommand(un7zip_command)
 end
 
 local function doDownload(url, downloadDir, filename)
 	local download_command = string.format('wget -O %s/%s "%s"', downloadDir, filename, url)
-	return Utils.executeCommand(download_command)
+	-- return Utils.executeCommand(download_command)
 end
 
-function Utils.downloadAndExtract(mods, extractDir, downloadDir)
+local function executeCommand(command)
+	LogIfVerbose("Executing command=" .. command)
+	local success, exitType, exitCode = os.execute(command)
+
+	if not success then
+		if exitType == "exit" then
+			LogIfVerbose("Command exited with status: " .. exitCode)
+		elseif exitType == "signal" then
+			LogIfVerbose("Command was killed by signal: " .. exitCode)
+		end
+	end
+
+	return success
+end
+
+------------------------------
+
+local Utils = {}
+
+function Utils.downloadAndExtract(mods)
 	LogIfVerbose("Downloading and extracting mods...")
 
 	for _, mod in pairs(mods) do
@@ -52,17 +70,15 @@ function Utils.downloadAndExtract(mods, extractDir, downloadDir)
 
 		local downloaded = true
 		if mod["fetcher"] == "github" then
-			downloaded = downloadFromGithub(mod, downloadDir)
+			downloaded = downloadFromGithub(mod)
 		elseif mod["fetcher"] == "googleDrive" then
 			-- downloaded = Utils.downloadFromGoogleDrive(mod.googleDriveId, mod.filename, downloadDir)
 		elseif mod.fetcher == "direct" then
 			print("implement me")
 		end
 
-		test()
-
 		if downloaded then
-			LogIfVerbose("\tDownloaded " .. mod.name .. " successfully, extracting to " .. extractDir)
+			LogIfVerbose("\tDownloaded " .. mod.name .. " successfully, extracting to " .. Args.destination)
 		end
 	end
 
@@ -136,21 +152,6 @@ end
 
 function Utils.getFileExtension(filePath)
 	return filePath:match("^.+(%..+)$")
-end
-
-function Utils.executeCommand(command)
-	LogIfVerbose("Executing command=" .. command)
-	local success, exitType, exitCode = os.execute(command)
-
-	if not success then
-		if exitType == "exit" then
-			LogIfVerbose("Command exited with status: " .. exitCode)
-		elseif exitType == "signal" then
-			LogIfVerbose("Command was killed by signal: " .. exitCode)
-		end
-	end
-
-	return success
 end
 
 return Utils
