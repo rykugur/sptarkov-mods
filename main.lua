@@ -29,32 +29,42 @@ parser:flag("-v --verbose", "Sets verbosity level (-v, -vv, -vvv)"):count("0-2")
 Args = parser:parse()
 
 if not utils.pathExists(Args.destination) then
-	utils.log('destination directory "' .. Args.destination .. '" does not exist or is not a directory. Creating.')
+	Log('destination directory "' .. Args.destination .. '" does not exist or is not a directory. Creating.')
 	lfs.mkdir(Args.destination)
 end
 
 if not utils.pathExists(Args.downloaddir) then
-	utils.log('download directory "' .. Args.downloaddir .. '" does not exist or is not a directory. Creating.')
+	Log('download directory "' .. Args.downloaddir .. '" does not exist or is not a directory. Creating.')
 	lfs.mkdir(Args.downloaddir)
 end
 
 local mods = {}
 
-utils.log("Loading mod defs from ./mods/*.json")
+Log("Loading mod defs from ./mods/*.json")
 local baseMods = utils.loadModsFromPath("./mods")
--- ml.update(mods, baseMods[1])
-table.insert(mods, baseMods[1])
+ml.update(mods, baseMods)
+-- table.insert(mods, baseMods[1])
 
-print("DERP99: baseMods[1]=", ToString(baseMods[1]))
+-- print("DERP99: baseMods[1]=", ToString(baseMods[1]))
 
 if Args.json ~= nil and utils.pathExists(Args.json) then
-	utils.log("Reading custom mods from json file=" .. Args.json)
+	Log("Reading custom mods from json file=" .. Args.json)
 	local customMods = utils.loadModsFromPath(Args.json)
 	if customMods ~= nil then
 		ml.update(mods, baseMods)
 	end
 end
 
-utils.log("Loaded " .. #mods .. " mod defs")
+Log("Loaded " .. #mods .. " mod defs")
 
 utils.downloadAndExtract(mods)
+
+--- install
+--- read mods from JSON into table
+--- for each mod in table
+--- try to download;
+--- if download success, add file to db
+--- --- try to extract;
+--- --- if extract success, add files to db
+--- --- if extract failed, log error and track failure in table to print at end
+--- if download failed, log error and track failure in table to print at end

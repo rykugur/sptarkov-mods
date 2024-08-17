@@ -21,7 +21,10 @@ to some tweaks to get it working on Windows. (Windows sux btw)
 ## Requirements
 
 - Lua 5.2+
-- Luarocks
+- `luarocks`
+- `jq`
+- `curl`
+- `wget`
 
 ## Installation
 
@@ -90,15 +93,29 @@ and they'll be picked up automatically.
 - `name`: Name of the mod (generally will match the name on Filebase)
 - `url`: URL to the mod on SPTarkov filebase
 - `fetcher`: The fetcher to use to download the mod archive
-- `owner`: Specific to github fetcher; the owner of the mod (the github owner/author)
-- `repo`: Specific to github fetcher; the repo of the mod (generally theauthor's github)
+- `owner`: Specific to github fetcher; the owner of the mod (the
+  github owner/author)
+- `repo`: Specific to github fetcher; the repo of the mod (generally
+  theauthor's github)
 `version`: The version of the mod
 `filename`: The filename of the mod archive to download*
-`googleDriveId`: Specific to the googleDrive fetcher; the file ID of the mod archive on Google Drive
-- `dependencies`: An array of dependencies for the mod (currently not implemented / WIP)
+`googleDriveId`: Specific to the googleDrive fetcher; the file ID of the
+  mod archive on Google Drive
+- `dependencies`: An array of dependencies for the mod (currently not
+  implemented / WIP)
 
-- because there is no standard when it comes to SPTarkov mod naming, and even in some cases what the archive structure looks like, this is necessary
+\* because there is no standard when it comes to SPTarkov mod naming, and
+even in some cases what the archive structure looks like, this is
+necessary.
+
+### Gotchas
+
+- Until I get around to adding file tracking, you'll want to manually delete
+  downloaded files; if not, you may end up installing multiple different
+  versions of the same mod.
 
 ## TODO
 
 - UI? Zenity or something better?
+- Add file tracking?
+- Mods that need special handling: SVM, SPT-Realism, Tactical Gear Component

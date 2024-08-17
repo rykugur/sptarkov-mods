@@ -1,0 +1,4 @@
+---@class SPTarkovModBase
+---@field name string
+---@field firebase_url string
+---@field fetcher string

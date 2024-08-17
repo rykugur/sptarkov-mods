@@ -1,39 +1,37 @@
-local utils = {}
-
----@class SPTarkovMod
----@field name string
----@field url string
----@field fetcher string
----@field owner? string
----@field repo? string
----@field version? string
----@field filename? string
----@field googleDriveId? string
----@field dependencies? string[]
+local M = {}
 
 ---@class CommandResult
 ---@field success? boolean
 ---@field exitType? string
 ---@field exitCode? integer
 
----@class DownloadResult
----@field success? boolean
----@field filename? string
----@field path? string
----@field commandResult CommandResult
-
 ---Excutes a command in the shell
 ---@param command any
 ---@return CommandResult
 local function executeCommand(command)
-	utils.log("Executing command=" .. command, 1)
-	local success, exitType, exitCode = os.execute(command)
+	local shell = os.getenv("SHELL")
+	local redirect = ""
+
+	if shell ~= nil and shell:find("fish") then
+		-- fish shell redirection
+		redirect = " &> /dev/null"
+	else
+		-- bash/zsh shell redirection
+		redirect = " 2>&1 /dev/null"
+	end
+
+	if Args.verbosity >= 2 then
+		redirect = ""
+	end
+
+	Log("Executing command=" .. command .. redirect, 1)
+	local success, exitType, exitCode = os.execute(command .. redirect)
 
 	if not success then
 		if exitType == "exit" then
-			utils.log("Command exited with status: " .. exitCode, 1)
+			Log("Command exited with status: " .. exitCode, 1)
 		elseif exitType == "signal" then
-			utils.log("Command was killed by signal: " .. exitCode, 1)
+			Log("Command was killed by signal: " .. exitCode, 1)
 		end
 	end
 
@@ -63,36 +61,36 @@ end
 local function downloadDirect(url, destination) end
 
 local function unzip(filename)
+	Log("\tUnzipping file " .. filename .. " to destination=" .. Args.destination, 1)
 	local unzip_command = string.format("unzip -o %s -d %s", filename, Args.destination)
 	return executeCommand(unzip_command)
 end
 
 local function un7zip(filename, destination)
-	utils.log("------ Un7zipping file " .. filename .. " to destination=" .. destination, 1)
+	Log("\tUn7zipping file " .. filename .. " to destination=" .. destination, 1)
 	local un7zip_command = string.format("7z x -o%s %s", destination, filename)
 	return executeCommand(un7zip_command)
 end
 
 local function extract(filename, destination)
-	local extension = utils.getFileExtension(filename)
+	local extension = M.getFileExtension(filename)
 
-	-- TODO: finish this
 	if extension == ".zip" then
 		return unzip(filename)
 	elseif extension == ".7z" then
 		return un7zip(filename, destination)
 	else
-		utils.log("File extension " .. extension .. " not supported", 1)
+		Log("File extension " .. extension .. " not supported", 1)
 	end
 end
 
 ------------------------------
 
-function utils.downloadAndExtract(mods)
-	utils.log("Downloading and extracting mods...", 1)
+function M.downloadAndExtract(mods)
+	Log("Downloading and extracting mods...")
 
 	for _, mod in pairs(mods) do
-		utils.log("\thandling mod: " .. mod.name, 1)
+		Log("\thandling mod: " .. mod.name)
 
 		local result = {}
 		if mod["fetcher"] == "github" then
@@ -100,77 +98,51 @@ function utils.downloadAndExtract(mods)
 		elseif mod["fetcher"] == "googleDrive" then
 			result = downloadFromGoogleDrive(mod.googleDriveId, mod.filename)
 		elseif mod.fetcher == "direct" then
-			utils.log("direct fetcher not implemented yet.")
+			Log("direct fetcher not implemented yet.")
 		end
 
 		if result.success then
-			utils.log("\tdownloaded, extracting...", 1)
-			-- TODO: special handling for SVM
+			Log("\tdownloaded archive, extracting")
+			-- TODO: special handling for SVM, TGC, SPT-Realism
 			local path = result.path .. "/" .. result.filename
 			local extractResult = extract(path, Args.destination)
 			if extractResult ~= nil then
-				utils.log("\textracted mod " .. mod.name .. " successfully", 1)
+				Log("\textracted mod")
 			else
-				local msg = string.format("\tfailed to extract mod %s, error=%s", mod.name, ToString(extractResult))
-				utils.log(msg, 1)
+				local msg = string.format("\tfailed to extract mod, error=%s", ToString(extractResult))
+				Log(msg, 1)
 			end
 		else
-			local msg = string.format(
-				"\tfailed to download mod %s, exitType=%s, exitCode=%d",
-				mod.name,
-				result.commandResult.exitType,
-				result.commandResult.exitCode
-			)
-			utils.log(msg, 1)
+			local msg = "\tfailed to download mod"
+			if Args.verbosity > 1 then
+				msg = msg
+					.. string.format(
+						", exitType=%s, exitCode=%d",
+						result.commandResult.exitType,
+						result.commandResult.exitCode
+					)
+			end
+			Log(msg)
 		end
+
+		Log("---")
 	end
 
-	utils.log("Done downloading and extracting mods...", 1)
+	Log("Done downloading and extracting mods...", 1)
 end
 
--- function Utils.downloadAndExtract2(mods, destination, downloadDir)
--- 	for _, mod in pairs(mods) do
--- 		if mod["fetcher"] == "github" then
--- 			Utils.downloadFromGithub(mod.owner, mod.repo, mod.version, mod.filename, downloadDir)
--- 		elseif mod["fetcher"] == "googleDrive" then
--- 			Utils.downloadFromGoogleDrive(mod.googleDriveId, mod.filename, downloadDir)
--- 		elseif mod.fetcher == "direct" then
--- 			Log("implement me")
--- 		end
--- 	end
---
--- 	local lfs = require("lfs")
--- 	for file in lfs.dir(downloadDir) do
--- 		if file ~= "." and file ~= ".." then
--- 			local filePath = downloadDir .. "/" .. file
--- 			if Utils.getFileExtension(filePath) == ".zip" then
--- 				if string.match(file, "ServerValueModifier") then
--- 					local tmpDst = destination .. "/user/mods"
--- 					Utils.unzip(filePath, tmpDst)
--- 				else
--- 					Utils.unzip(filePath, destination)
--- 				end
--- 			elseif Utils.getFileExtension(filePath) == ".7z" then
--- 				Utils.un7zip(filePath, destination)
--- 			else
--- 				Log("File extension " .. Utils.getFileExtension(filePath) .. " not supported")
--- 			end
--- 		end
--- 	end
--- end
-
-function utils.pathExists(path)
+function M.pathExists(path)
 	return require("ml").exists(path)
 end
 
-function utils.loadModsFromPath(path)
+function M.loadModsFromPath(path)
 	local lfs = require("lfs")
 	local mods = {}
 
 	for file in lfs.dir(path) do
-		if file ~= "." and file ~= ".." and utils.getFileExtension(file) == ".json" then
-			local mod = utils.readJsonFile(path .. "/" .. file)
-			utils.log("Loaded mod=" .. ToString(mod), 1)
+		if file ~= "." and file ~= ".." and M.getFileExtension(file) == ".json" then
+			local mod = M.readJsonFile(path .. "/" .. file)
+			Log("Loaded mod=" .. ToString(mod), 1)
 			if mod ~= nil then
 				table.insert(mods, mod)
 			end
@@ -180,8 +152,8 @@ function utils.loadModsFromPath(path)
 	return mods
 end
 
-function utils.readJsonFile(filePath)
-	utils.log("Attempting to read json file=" .. ToString(filePath), 1)
+function M.readJsonFile(filePath)
+	Log("Attempting to read json file=" .. ToString(filePath), 1)
 	local dkjson = require("dkjson")
 	local file = io.open(filePath, "r")
 	if file == nil then
@@ -193,11 +165,11 @@ function utils.readJsonFile(filePath)
 	return json
 end
 
-function utils.getFileExtension(filePath)
+function M.getFileExtension(filePath)
 	return filePath:match("^.+(%..+)$")
 end
 
-function utils.log(msg, verbosity)
+function Log(msg, verbosity)
 	if verbosity == nil or verbosity == 0 then
 		print("INFO: " .. msg)
 		return
@@ -208,4 +180,4 @@ function utils.log(msg, verbosity)
 	end
 end
 
-return utils
+return M
